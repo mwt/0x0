@@ -1,0 +1,7 @@
+PassengerFriendlyErrorPages on
+<Limit POST>
+    AuthType Basic
+    AuthName "Restricted Content"
+    AuthUserFile /home/dh_scdjre/mwt.sh/.htpasswd
+    Require valid-user
+</Limit>
