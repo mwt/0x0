@@ -19,12 +19,11 @@ def upgrade():
     op.create_table('URL',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('url', sa.UnicodeText(), nullable=True),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('url')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('file',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('sha256', sa.String(), nullable=True),
+    sa.Column('sha256', sa.String(64), nullable=True),
     sa.Column('ext', sa.UnicodeText(), nullable=True),
     sa.Column('mime', sa.UnicodeText(), nullable=True),
     sa.Column('addr', sa.UnicodeText(), nullable=True),

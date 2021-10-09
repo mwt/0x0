@@ -65,6 +65,7 @@ app.config.update(
     NSFW_DETECT = False,
     NSFW_THRESHOLD = 0.608,
     URL_ALPHABET = "DEQhd2uFteibPwq0SWBInTpA_jcZL5GKz3YCR14Ulk87Jors9vNHgfaOmMXy6Vx-",
+    SQLALCHEMY_DATABASE_URI = 'mysql://username:password@localhost/db_name',
 )
 
 if not app.config["TESTING"]:
@@ -95,7 +96,7 @@ su = UrlEncoder(alphabet=app.config["URL_ALPHABET"], block_size=16)
 
 class URL(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    url = db.Column(db.UnicodeText, unique = True)
+    url = db.Column(db.UnicodeText)
 
     def __init__(self, url):
         self.url = url
@@ -118,7 +119,7 @@ class URL(db.Model):
 
 class File(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    sha256 = db.Column(db.String, unique = True)
+    sha256 = db.Column(db.String(64), unique = True)
     ext = db.Column(db.UnicodeText)
     mime = db.Column(db.UnicodeText)
     addr = db.Column(db.UnicodeText)
