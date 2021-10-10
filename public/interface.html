@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>MWTsh | Matthew W. Thomas' Share</title>
+
+    <link rel="stylesheet" href="/assets/css/md.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--- favicon --->
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+</head>
+
+<body>
+    <h1 id="mwt-sh" class="code-line">Matthew W. Thomas' Share</h1>
+    <p class="code-line">
+        This is the interface for uploading to the share. <a href="/">Click here to return home.</a>
+    </p>
+
+    <h2 id="shorten" class="code-line">Shorten</h2>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="text" id="shorten" name="shorten" value="URL">
+        <button type="submit">Send</button>
+    </form>
+
+    <h2 id="file-upload" class="code-line">File upload</h2>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <div><input type="file" id="file" name="file"></div>
+        <button type="submit">Send</button>
+    </form>
+
+    <h2 id="file-get" class="code-line">File get</h2>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="text" id="url" name="url" value="URL">
+        <button type="submit">Send</button>
+    </form>
+
+</body>
+
+</html>

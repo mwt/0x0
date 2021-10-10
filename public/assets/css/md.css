@@ -43,7 +43,6 @@ img {
 }
 
 a {
-    color: unset;
     text-decoration: none;
 }
 
@@ -115,6 +114,31 @@ blockquote {
     border-left-style: solid;
 }
 
+input,
+button {
+    font-size: 1em;
+}
+
+button,
+input {
+    width: 100%;
+    margin-bottom: 2em;
+    padding: 0.25em 0.75em;
+}
+
+input[type=text] {
+    color: unset;
+    height: 2em;
+    border: none;
+}
+
+button,
+input[type="submit"] {
+    border-radius: 0px;
+    border: none;
+    user-select: none;
+}
+
 code {
     font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
     font-size: 14px;
@@ -137,6 +161,10 @@ pre.hljs code>div {
     overflow: auto;
 }
 
+.mb {
+    margin-bottom: 1em;
+}
+
 
 /* Theming
    ----------------------------- */
@@ -148,6 +176,10 @@ body {
     color: #d4d4d4;
 }
 
+a {
+    color: #3794ff;
+}
+
 .code-line:hover:before {
     border-left: 3px solid rgba(255, 255, 255, 0.60);
 }
@@ -156,6 +188,11 @@ body {
     border-left: none;
 }
 
+input[type=text]:focus {
+    outline-color: #007fd4;
+}
+
+input[type=text],
 pre {
     background-color: rgba(10, 10, 10, 0.4);
 }
@@ -179,6 +216,10 @@ table>tbody>tr+tr>td {
         color: #000;
     }
 
+    a {
+        color: #006ab1;
+    }
+
     .code-line:hover:before {
         border-left: 3px solid rgba(0, 0, 0, 0.40);
     }
@@ -187,6 +228,11 @@ table>tbody>tr+tr>td {
         border-left: none;
     }
 
+    input[type=text]:focus {
+        outline-color: #0090f1;
+    }
+
+    input[type=text],
     pre {
         background-color: rgba(220, 220, 220, 0.4);
     }
@@ -211,6 +257,10 @@ table>tbody>tr+tr>td {
         color: #fff;
     }
 
+    a {
+        color: #3794ff
+    }
+
     .code-line:hover:before {
         border-left: 3px solid rgba(255, 160, 0, 1);
     }
@@ -219,6 +269,11 @@ table>tbody>tr+tr>td {
         border-left: none;
     }
 
+    input[type=text]:focus {
+        outline-color: #f38518;
+    }
+
+    input[type=text],
     pre {
         background-color: rgb(0, 0, 0);
     }
@@ -232,7 +287,8 @@ table>tbody>tr+tr>td {
 /* Monokai
    ----------------------------- */
 
-@media (prefers-color-scheme:dark) {
+@media (prefers-color-scheme:dark),
+(prefers-contrast:more) {
     .hljs {
         background: #272822;
         color: #ddd;
