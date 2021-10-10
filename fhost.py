@@ -325,11 +325,6 @@ def fhost():
     else:
         return render_template("index.html")
 
-@app.route("/robots.txt")
-def robots():
-    return """User-agent: *
-Disallow: /
-"""
 
 @app.errorhandler(400)
 @app.errorhandler(404)
