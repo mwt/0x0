@@ -1,38 +1,57 @@
-<pre>
-THE NULL POINTER
-================
-{% set fhost_url = url_for("fhost", _external=True).rstrip("/") %}
-HTTP POST files here:
-    curl -F'file=@yourfile.png' {{ fhost_url }}
-You can also POST remote URLs:
-    curl -F'url=http://example.com/image.jpg' {{ fhost_url }}
-Or you can shorten URLs:
-    curl -F'shorten=http://example.com/some/long/url' {{ fhost_url }}
-
-File URLs are valid for at least 30 days and up to a year (see below).
-Shortened URLs do not expire.
+{% set fhost_url = "https://user:pass@mwt.sh" %}
 {% set max_size = config["MAX_CONTENT_LENGTH"]|filesizeformat(True) %}
-Maximum file size: {{ max_size }}
-Not allowed: {{ config["FHOST_MIME_BLACKLIST"]|join(", ") }}
+<!DOCTYPE html>
+<html>
 
+<head>
+    <meta charset="UTF-8">
+    <title>MWTsh | Matthew W. Thomas' Share</title>
 
-FILE RETENTION PERIOD
----------------------
+    <link rel="stylesheet" href="/assets/css/md.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-retention = min_age + (-max_age + min_age) * pow((file_size / max_size - 1), 3)
+    <!--- favicon --->
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
+</head>
 
-   days
-    365 |  \\
-        |   \\
-        |    \\
-        |     \\
-        |      \\
-        |       \\
+<body>
+    <h1 id="mwt-sh" class="code-line">Matthew W. Thomas' Share</h1>
+    <p class="code-line">
+        This is a private share for my documents. It a <a href="https://github.com/mwt/0x0/">fork</a> of <a href="https://0x0.st">nullpointer</a>. However, unlike the original, it is not open. You need a username and password to add files or shortlinks. To see more of my projects, check out <a href="https://mattwthomas.com">my website</a>.
+    </p>
+
+    <h2 id="usage" class="code-line">Usage</h2>
+    <p class="code-line">HTTP POST files here</p>
+    <pre><code class="language-sh"><div>curl -F<span class="hljs-string">'file=@yourfile.png'</span> {{ fhost_url }}
+</div></code></pre>
+    <p class="code-line">You can also POST remote URLs:</p>
+    <pre><code class="language-sh"><div>curl -F<span class="hljs-string">'url=https://mattwthomas.com/assets/pdfs/cv.pdf'</span> {{ fhost_url }}
+</div></code></pre>
+    <p class="code-line">Or you can shorten URLs:</p>
+    <pre><code class="language-sh"><div>curl -F<span class="hljs-string">'shorten=https://mattwthomas.com/'</span> {{ fhost_url }}
+</div></code></pre>
+    <p class="code-line">File URLs are valid for at least 30 days and up to a year (see below).</p>
+    <p class="code-line">Shortened URLs do not expire.</p>
+    <p class="code-line">Maximum file size: <code>{{ max_size }}</code></p>
+    <p class="code-line">Not allowed: <code>{{ config["FHOST_MIME_BLACKLIST"]|join(", ") }}</code></p>
+
+    <h2 id="file-retention-period" class="code-line">File Retention Period</h2>
+    <pre><code class="language-py"><div>retention = min_age + (-max_age + min_age) * pow((file_size / max_size - <span class="hljs-number">1</span>), <span class="hljs-number">3</span>)
+</div></code></pre>
+    <pre><code><code><div>   days
+    365 |  \\\\
+        |   \\\\
+        |    \\\\
+        |     \\\\
+        |      \\\\
+        |       \\\\
         |        ..
-        |          \\
+        |          \\\\
   197.5 | ----------..-------------------------------------------
         |             ..
-        |               \\
+        |               \\\\
         |                ..
         |                  ...
         |                     ..
@@ -42,4 +61,8 @@ retention = min_age + (-max_age + min_age) * pow((file_size / max_size - 1), 3)
      30 |                                    ....................
           0{{ ((config["MAX_CONTENT_LENGTH"]/2)|filesizeformat(True)).split(" ")[0].rjust(27) }}{{ max_size.split(" ")[0].rjust(27) }}
            {{ max_size.split(" ")[1].rjust(54) }}
-</pre>
+</div></code></code></pre>
+
+</body>
+
+</html>
