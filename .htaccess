@@ -1,4 +1,3 @@
-PassengerFriendlyErrorPages on
 <Limit POST>
     AuthType Basic
     AuthName "Restricted Content"
