@@ -12,6 +12,8 @@ body {
     max-width: 1000px;
     margin-left: auto;
     margin-right: auto;
+    background-color: var(--bg-color);
+    color: var(--fg-color);
 }
 
 @media only screen and (max-width: 800px) {
@@ -43,6 +45,7 @@ img {
 }
 
 a {
+    color: var(--ln-color);
     text-decoration: none;
 }
 
@@ -114,29 +117,42 @@ blockquote {
     border-left-style: solid;
 }
 
-input,
-button {
-    font-size: 1em;
-}
-
-button,
-input {
-    width: 100%;
-    margin-bottom: 2em;
-    padding: 0.25em 0.75em;
+input[type=text],
+pre {
+    background-color: var(--bg-code-color);
 }
 
 input[type=text] {
-    color: unset;
+    color: var(--fg-color);
     height: 2em;
     border: none;
 }
 
+input[type=text]:focus {
+    outline-color: var(--in-border-color);
+}
+
+input,
+button {
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 0.75em;
+    padding: 0.25em 0.75em;
+}
+
 button,
 input[type="submit"] {
+    color: #fff;
+    background-color: var(--bt-color);
     border-radius: 0px;
     border: none;
     user-select: none;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: var(--bt-color-hover);
 }
 
 code {
@@ -161,42 +177,6 @@ pre.hljs code>div {
     overflow: auto;
 }
 
-.mb {
-    margin-bottom: 1em;
-}
-
-
-/* Theming
-   ----------------------------- */
-
-/* Dark */
-
-body {
-    background-color: #1e1e1e;
-    color: #d4d4d4;
-}
-
-a {
-    color: #3794ff;
-}
-
-.code-line:hover:before {
-    border-left: 3px solid rgba(255, 255, 255, 0.60);
-}
-
-.code-line .code-line:hover:before {
-    border-left: none;
-}
-
-input[type=text]:focus {
-    outline-color: #007fd4;
-}
-
-input[type=text],
-pre {
-    background-color: rgba(10, 10, 10, 0.4);
-}
-
 table>thead>tr>th {
     border-color: rgba(255, 255, 255, 0.69);
 }
@@ -207,44 +187,44 @@ table>tbody>tr+tr>td {
     border-color: rgba(255, 255, 255, 0.18);
 }
 
+.code-line:hover:before {
+    border-left: 3px solid var(--cl-color);
+}
+
+.code-line .code-line:hover:before {
+    border-left: none;
+}
+
+
+/* Theming
+   ----------------------------- */
+
+/* Dark */
+
+:root {
+    --bg-color: #1e1e1e;
+    --fg-color: #d4d4d4;
+    --ln-color: #3794ff;
+    --bt-color: #0e639c;
+    --bt-color-hover: #1177bb;
+    --cl-color: rgba(255, 255, 255, 0.60);
+    --in-border-color: #007fd4;
+    --bg-code-color: rgba(10, 10, 10, 0.4);
+}
+
 
 /* Light */
 
 @media (prefers-color-scheme:light) {
-    body {
-        background-color: #fff;
-        color: #000;
-    }
-
-    a {
-        color: #006ab1;
-    }
-
-    .code-line:hover:before {
-        border-left: 3px solid rgba(0, 0, 0, 0.40);
-    }
-
-    .code-line .code-line:hover:before {
-        border-left: none;
-    }
-
-    input[type=text]:focus {
-        outline-color: #0090f1;
-    }
-
-    input[type=text],
-    pre {
-        background-color: rgba(220, 220, 220, 0.4);
-    }
-
-    table>thead>tr>th {
-        border-color: rgba(0, 0, 0, 0.69);
-    }
-
-    h1,
-    hr,
-    table>tbody>tr+tr>td {
-        border-color: rgba(0, 0, 0, 0.18);
+    :root {
+        --bg-color: #fff;
+        --fg-color: #000;
+        --ln-color: #006ab1;
+        --bt-color: #007acc;
+        --bt-color-hover: #0062a3;
+        --cl-color: rgba(0, 0, 0, 0.40);
+        --in-border-color: #0090f1;
+        --bg-code-color: rgba(220, 220, 220, 0.4);
     }
 }
 
@@ -252,34 +232,26 @@ table>tbody>tr+tr>td {
 /* High Contrast */
 
 @media (prefers-contrast:more) {
-    body {
-        background-color: #000;
-        color: #fff;
-    }
-
-    a {
-        color: #3794ff
-    }
-
-    .code-line:hover:before {
-        border-left: 3px solid rgba(255, 160, 0, 1);
-    }
-
-    .code-line .code-line:hover:before {
-        border-left: none;
-    }
-
-    input[type=text]:focus {
-        outline-color: #f38518;
-    }
-
-    input[type=text],
-    pre {
-        background-color: rgb(0, 0, 0);
+    :root {
+        --bg-color: #000;
+        --fg-color: #fff;
+        --ln-color: #006ab1;
+        --bt-color: #007acc;
+        --ln-color: #3794ff;
+        --bt-color: #000;
+        --bt-color-hover: #000;
+        --cl-color: rgba(255, 160, 0, 1);
+        --in-border-color: #f38518;
+        --bg-code-color: rgb(0, 0, 0);
     }
 
     h1 {
         border-color: rgb(0, 0, 0);
+    }
+
+    button,
+    input[type="submit"] {
+        border: 1px solid #6fc3df;
     }
 }
 
