@@ -39,13 +39,13 @@ Before running the service for the first time, run `FLASK_APP=fhost flask db upg
 This fork features password protection for the POST endpoint. This means the upload is impossible without basic authentication. Accounts are managed from a `.htpasswd` file. You can create your first user by running:
 
 ~~~sh
-htpasswd -c -B -b .htpasswd user1 password
+htpasswd -c -B -b .htpasswd "user1" "password"
 ~~~
 
 Once the file is created, you can append users with:
 
 ~~~sh
-htpasswd -B -b .htpasswd user2 password
+htpasswd -B -b .htpasswd "user2" "password"
 ~~~
 
 ## NSFW Detection
