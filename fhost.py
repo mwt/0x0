@@ -37,11 +37,12 @@ file_hostname = "https://mwt.sh/"
 
 app = Flask(__name__, instance_relative_config=True)
 app.config.update(
+    DIRECTORY = "/",
     SQLALCHEMY_TRACK_MODIFICATIONS = False,
     PREFERRED_URL_SCHEME = "https", # nginx users: make sure to have 'uwsgi_param UWSGI_SCHEME $scheme;' in your config
     MAX_CONTENT_LENGTH = 256 * 1024 * 1024,
     MAX_URL_LENGTH = 4096,
-    USE_X_SENDFILE = False,
+    USE_X_SENDFILE = True,
     FHOST_USE_X_ACCEL_REDIRECT = True, # expect nginx by default
     FHOST_STORAGE_PATH = "up",
     FHOST_MAX_EXT_LENGTH = 9,
@@ -300,6 +301,13 @@ def get(path):
                 response.headers["Content-Type"] = f.mime
                 response.headers["Content-Length"] = fpath.stat().st_size
                 response.headers["X-Accel-Redirect"] = "/" + str(fpath)
+                return response
+            elif app.config["USE_X_SENDFILE"]:
+                response = make_response()
+                response.headers["Content-Type"] = f.mime
+                response.headers["Content-Length"] = fpath.stat().st_size
+                response.headers["X-Sendfile"] = app.config["DIRECTORY"] + str(fpath)
+                response.headers["Content-Disposition"] = 'attachment; filename="' + name + sufs + '"'
                 return response
             else:
                 return send_from_directory(app.config["FHOST_STORAGE_PATH"], f.sha256, mimetype = f.mime)
