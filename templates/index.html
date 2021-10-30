@@ -1,12 +1,10 @@
-{% set fhost_url = "https://user:pass@mwt.sh" %}
-{% set max_size = config["MAX_CONTENT_LENGTH"]|filesizeformat(True) %}
+{%- set fhost_url = "https://user:pass@mwt.sh" -%}
+{%- set max_size = config["MAX_CONTENT_LENGTH"]|filesizeformat(True) -%}
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="UTF-8">
     <title>MWTsh | Matthew W. Thomas' Share</title>
-
     <link rel="stylesheet" href="/assets/css/md.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -21,10 +19,26 @@
     <p class="code-line">
         This is a private share for my documents. It a <a href="https://github.com/mwt/0x0/">fork</a> of <a href="https://0x0.st">nullpointer</a>. However, unlike the original, it is not open. You need a username and password to add files or shortlinks. To see more of my projects, check out <a href="https://mattwthomas.com">my website</a>.
     </p>
+    
+    <h2 id="shorten" class="code-line">Shorten</h2>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="text" id="shorten" name="shorten" placeholder="URL">
+        <button type="submit">Send</button>
+    </form>
 
-    <h2 id="usage" class="code-line">Usage</h2>
+    <h2 id="file-upload" class="code-line">File upload</h2>
+    <form action="https://www.mwt.sh/" method="POST" enctype="multipart/form-data">
+        <input type="file" id="file" name="file">
+        <button type="submit">Send</button>
+    </form>
 
-    <p class="code-line">You can use the <a href="/interface.html">interface</a> or the following command line recipes.</p>
+    <h2 id="file-get" class="code-line">File get</h2>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="text" id="url" name="url" placeholder="URL">
+        <button type="submit">Send</button>
+    </form>
+
+    <h2 id="usage" class="code-line">CLI usage</h2>
     <p class="code-line">HTTP POST files here</p>
     <pre><code class="language-sh"><div>curl -F<span class="hljs-string">'file=@yourfile.png'</span> {{ fhost_url }}
 </div></code></pre>
@@ -66,5 +80,4 @@
 </div></code></code></pre>
 
 </body>
-
 </html>

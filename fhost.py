@@ -33,6 +33,8 @@ from short_url import UrlEncoder
 from validators import url as url_valid
 from pathlib import Path
 
+file_hostname = "https://mwt.sh/"
+
 app = Flask(__name__, instance_relative_config=True)
 app.config.update(
     SQLALCHEMY_TRACK_MODIFICATIONS = False,
@@ -139,9 +141,9 @@ class File(db.Model):
         n = self.getname()
 
         if self.nsfw_score and self.nsfw_score > app.config["NSFW_THRESHOLD"]:
-            return url_for("get", path=n, _external=True, _anchor="nsfw") + "\n"
+            return file_hostname + n + "#nsfw" + "\n"
         else:
-            return url_for("get", path=n, _external=True) + "\n"
+            return file_hostname + n + "\n"
 
     def store(file_, addr):
         data = file_.stream.read()
