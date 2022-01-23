@@ -1,7 +1,9 @@
-import sys, os
-INTERP = os.path.join(os.environ['HOME'], 'mwt.sh', 'venv', 'bin', 'python3')
-if sys.executable != INTERP:
-    os.execl(INTERP, INTERP, *sys.argv)
-sys.path.append(os.getcwd())
+import imp
+import os
+import sys
 
-from fhost import app as application
+
+sys.path.insert(0, os.path.dirname(__file__))
+
+wsgi = imp.load_source('wsgi', 'fhost.py')
+application = wsgi.app

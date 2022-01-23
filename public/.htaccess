@@ -1,0 +1,12 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/mwtsh/0x0"
+PassengerBaseURI "/"
+PassengerPython "/home/mwtsh/virtualenv/0x0/3.8/bin/python"
+PassengerAppLogFile "/home/mwtsh/logs/passengar.log"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+<If "%{REQUEST_METHOD} == 'POST'">
+    AuthType Basic
+    AuthName "Restricted Content"
+    AuthUserFile /home/mwtsh/domains/mwt.sh/public_html/.htpasswd
+    Require valid-user
+</If>
