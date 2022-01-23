@@ -29,7 +29,6 @@ from magic import Magic
 from mimetypes import guess_extension
 import sys
 import requests
-from short_url import UrlEncoder
 from validators import url as url_valid
 from pathlib import Path
 
@@ -94,8 +93,6 @@ Please install python-magic.""")
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 
-su = UrlEncoder(alphabet=app.config["URL_ALPHABET"], block_size=16)
-
 class URL(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     url = db.Column(db.UnicodeText)
@@ -104,7 +101,7 @@ class URL(db.Model):
         self.url = url
 
     def getname(self):
-        return su.enbase(self.id, 1)
+        return su.enbase(self.id)
 
     def geturl(self):
         return url_for("get", path=self.getname(), _external=True) + "\n"
@@ -135,7 +132,7 @@ class File(db.Model):
         self.addr = addr
 
     def getname(self):
-        return u"{0}{1}".format(su.enbase(self.id, 1), self.ext)
+        return u"{0}{1}".format(su.enbase(self.id), self.ext)
 
     def geturl(self):
         n = self.getname()
@@ -168,7 +165,7 @@ class File(db.Model):
 
         def get_ext(mime):
             ext = "".join(Path(file_.filename).suffixes[-2:])
-            gmime = mime[:mime.find(";")]
+            gmime = mime.split(";")[0]
             guess = guess_extension(gmime)
 
             app.logger.debug(f"extension - specified: '{ext}' - detected: '{guess}'")
@@ -209,6 +206,31 @@ class File(db.Model):
         db.session.add(f)
         db.session.commit()
         return f
+
+
+
+class UrlEncoder(object):
+    def __init__(self,alphabet, min_length):
+        self.alphabet = alphabet
+        self.min_length = min_length
+
+    def enbase(self, x):
+        n = len(self.alphabet)
+        str = ""
+        while x > 0:
+            str = (self.alphabet[int(x % n)]) + str
+            x = int(x // n)
+        padding = self.alphabet[0] * (self.min_length - len(str))
+        return '%s%s' % (padding, str)
+
+    def debase(self, x):
+        n = len(self.alphabet)
+        result = 0
+        for i, c in enumerate(reversed(x)):
+            result += self.alphabet.index(c) * (n ** i)
+        return result
+
+su = UrlEncoder(alphabet=app.config["URL_ALPHABET"], min_length=1)
 
 def fhost_url(scheme=None):
     if not scheme:

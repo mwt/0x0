@@ -8,5 +8,4 @@ Flask_SQLAlchemy
 validators
 flask_migrate
 python_magic
-short_url
 mysqlclient
