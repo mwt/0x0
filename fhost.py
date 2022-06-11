@@ -328,7 +328,6 @@ def get(path):
                 response.headers["Content-Type"] = f.mime
                 response.headers["Content-Length"] = fpath.stat().st_size
                 response.headers["X-LiteSpeed-Location"] = "/" + str(fpath)
-                response.headers["Content-Disposition"] = 'attachment; filename="' + name + sufs + '"'
                 return response
             else:
                 return send_from_directory(app.config["FHOST_STORAGE_PATH"], f.sha256, mimetype = f.mime)
