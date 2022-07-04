@@ -1,12 +1,28 @@
-# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
-PassengerAppRoot "/home/mwtsh/0x0"
-PassengerBaseURI "/"
-PassengerPython "/home/mwtsh/virtualenv/0x0/3.8/bin/python"
-PassengerAppLogFile "/home/mwtsh/logs/passengar.log"
-# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
 <If "%{REQUEST_METHOD} == 'POST'">
     AuthType Basic
     AuthName "Restricted Content"
-    AuthUserFile /home/mwtsh/domains/mwt.sh/public_html/.htpasswd
+    AuthUserFile /home/mwtsh/public_html/.htpasswd
     Require valid-user
 </If>
+# cache rules
+<IfModule mod_expires.c>
+    # Turn on the module.
+    ExpiresActive on
+    # Set the default expiry times.
+    ExpiresDefault "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType text/javascript "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType text/html "access plus 1 month"
+</IfModule>
+<IfModule mod_headers.c>
+    Header set Cache-Control "public"
+</IfModule>
+# send main page to static file
+<IfModule LiteSpeed>
+    RewriteEngine on
+    CacheLookup on
+    RewriteBase /
+    RewriteCond %{REQUEST_METHOD} =GET
+    RewriteRule ^$ /index.html [L]
+</IfModule>

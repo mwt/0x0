@@ -32,8 +32,6 @@ import requests
 from validators import url as url_valid
 from pathlib import Path
 
-file_hostname = "https://mwt.sh/"
-
 app = Flask(__name__, instance_relative_config=True)
 app.config.update(
     SQLALCHEMY_TRACK_MODIFICATIONS = False,
@@ -66,7 +64,6 @@ app.config.update(
     NSFW_DETECT = False,
     NSFW_THRESHOLD = 0.608,
     URL_ALPHABET = "DEQhd2uFteibPwq0SWBInTpA_jcZL5GKz3YCR14Ulk87Jors9vNHgfaOmMXy6Vx-",
-    SQLALCHEMY_DATABASE_URI = 'mysql://username:password@localhost/db_name',
 )
 
 if not app.config["TESTING"]:
@@ -95,7 +92,7 @@ migrate = Migrate(app, db)
 
 class URL(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    url = db.Column(db.UnicodeText)
+    url = db.Column(db.UnicodeText, unique = True)
 
     def __init__(self, url):
         self.url = url
@@ -118,7 +115,7 @@ class URL(db.Model):
 
 class File(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    sha256 = db.Column(db.String(64), unique = True)
+    sha256 = db.Column(db.String, unique = True)
     ext = db.Column(db.UnicodeText)
     mime = db.Column(db.UnicodeText)
     addr = db.Column(db.UnicodeText)
@@ -138,9 +135,9 @@ class File(db.Model):
         n = self.getname()
 
         if self.nsfw_score and self.nsfw_score > app.config["NSFW_THRESHOLD"]:
-            return file_hostname + n + "#nsfw" + "\n"
+            return url_for("get", path=n, _external=True, _anchor="nsfw") + "\n"
         else:
-            return file_hostname + n + "\n"
+            return url_for("get", path=n, _external=True) + "\n"
 
     def store(file_, addr):
         data = file_.stream.read()

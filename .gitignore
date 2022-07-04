@@ -4,3 +4,5 @@ instance/
 .htpasswd
 up/
 *.log
+*.db
+tmp/

@@ -1,29 +1,81 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>
-		mwt.sh
-	</title>
+    <meta charset="UTF-8">
+    <title>MWTsh | Matthew W. Thomas' Share</title>
+    <link rel="stylesheet" href="/assets/css/md.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<style>
-	* { font-family: verdana; font-size: 10pt; COLOR: gray; }
-	b { font-weight: bold; }
-	table { height: 50%; border: 1px solid gray;}
-	td { text-align: center; padding: 25;}
-
-	</style>
+    <!--- favicon --->
+    <link rel="icon" type="image/svg+xml" href="/assets/images/favicon/favicon.svg">
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon/favicon-16x16.png">
 </head>
+
 <body>
-<center>
-<br><br><br><br>
-	<table>
-	<tr><td>Welcome to the home of <b>mwt.sh</b></td></tr>
-	<tr><td>To change this page, upload your website into the public_html directory</td></tr>
-	<tr><td><img src="logo.png"></td></tr>
-	<tr><td style="font-size: 8pt">Date Created: Thu Nov 25 21:11:08 2021</td></tr>
-	</table>
-<br><br>
+    <h1 id="mwt-sh" class="code-line">Matthew W. Thomas' Share</h1>
+    <p class="code-line">
+        This is a private share for my documents. It a <a href="https://github.com/mwt/0x0/">fork</a> of <a href="https://0x0.st">nullpointer</a>. However, unlike the original, it is not open. You need a username and password to add files or shortlinks. To see more of my projects, check out <a href="https://mattwthomas.com">my website</a>.
+    </p>
+    
+    <h2 id="shorten" class="code-line">Shorten</h2>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="text" id="shorten" name="shorten" placeholder="URL">
+        <button type="submit">Send</button>
+    </form>
 
-</center>
+    <h2 id="file-upload" class="code-line">File upload</h2>
+    <form action="https://www.mwt.sh/" method="POST" enctype="multipart/form-data">
+        <input type="file" id="file" name="file">
+        <button type="submit">Send</button>
+    </form>
+
+    <h2 id="file-get" class="code-line">File get</h2>
+    <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="text" id="url" name="url" placeholder="URL">
+        <button type="submit">Send</button>
+    </form>
+
+    <h2 id="usage" class="code-line">CLI usage</h2>
+    <p class="code-line">HTTP POST files here</p>
+    <pre><code class="language-sh"><div>curl -F<span class="hljs-string">'file=@yourfile.png'</span> https://user:pass@mwt.sh
+</div></code></pre>
+    <p class="code-line">You can also POST remote URLs:</p>
+    <pre><code class="language-sh"><div>curl -F<span class="hljs-string">'url=https://mattwthomas.com/assets/pdfs/cv.pdf'</span> https://user:pass@mwt.sh
+</div></code></pre>
+    <p class="code-line">Or you can shorten URLs:</p>
+    <pre><code class="language-sh"><div>curl -F<span class="hljs-string">'shorten=https://mattwthomas.com/'</span> https://user:pass@mwt.sh
+</div></code></pre>
+    <p class="code-line">File URLs are valid for at least 30 days and up to a year (see below).</p>
+    <p class="code-line">Shortened URLs do not expire.</p>
+    <p class="code-line">Maximum file size: <code>256.0 MiB</code></p>
+    <p class="code-line">Not allowed: <code>application/x-dosexec, application/java-archive, application/java-vm</code></p>
+
+    <h2 id="file-retention-period" class="code-line">File Retention Period</h2>
+    <pre><code class="language-py"><div>retention = min_age + (-max_age + min_age) * pow((file_size / max_size - <span class="hljs-number">1</span>), <span class="hljs-number">3</span>)
+</div></code></pre>
+    <pre><code><code><div>   days
+    365 |  \\\\
+        |   \\\\
+        |    \\\\
+        |     \\\\
+        |      \\\\
+        |       \\\\
+        |        ..
+        |          \\\\
+  197.5 | ----------..-------------------------------------------
+        |             ..
+        |               \\\\
+        |                ..
+        |                  ...
+        |                     ..
+        |                       ...
+        |                          ....
+        |                              ......
+     30 |                                    ....................
+          0                      128.0                      256.0
+                                                              MiB
+</div></code></code></pre>
+
 </body>
-
 </html>
