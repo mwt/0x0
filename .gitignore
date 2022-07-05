@@ -3,6 +3,7 @@ __pycache__/
 instance/
 .htpasswd
 up/
+up
 *.log
 *.db
 tmp/
