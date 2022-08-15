@@ -192,9 +192,7 @@ class File(db.Model):
         p = storage / digest
 
         if not p.is_file():
-            if hasattr(file_.stream, "seekable") and file_.stream.seekable():
-                file_.stream.seek(0)
-
+            file_.stream.seek(0)
             file_.save(p)
         else:
             p.touch()
